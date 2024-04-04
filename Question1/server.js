@@ -6,6 +6,11 @@ const app = express();
 const PORT = process.env.PORT || 9876;
 const WINDOW_SIZE = 10;
 
+const COMPANY_NAME = "SRMAP";
+const CLIENT_ID = "a94ee1d9-f293-4083-b33e-54e33a013eb3";
+const CLIENT_SECRET = "JPnHislKeYuJNCSR";
+const ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiZXhwIjoxNzEyMTU5MjM5LCJpYXQiOjE3MTIxNTg5MzksImlzcyI6IkFmZm9yZG1lZCIsImp0aSI6ImE5NGVlMWQ5LWYyOTMtNDA4My1iMzNlLTU0ZTMzYTAxM2ViMyIsInN1YiI6Im1hbm9oYXJfanVuZ2FAc3JtYXAuZWR1LmluIn0sImNvbXBhbnlOYW1lIjoiU1JNQVAiLCJjbGllbnRJRCI6ImE5NGVlMWQ5LWYyOTMtNDA4My1iMzNlLTU0ZTMzYTAxM2ViMyIsImNsaWVudFNlY3JldCI6IkpQbkhpc2xLZVl1Sk5DU1IiLCJvd25lck5hbWUiOiJtYW5vaGFyIiwib3duZXJFbWFpbCI6Im1hbm9oYXJfanVuZ2FAc3JtYXAuZWR1LmluIiwicm9sbE5vIjoiQVAyMTExMDAxMDk1NyJ9.L50BffD3Cloj2bZf4dZjCt1VgxPcv3AVIwMjLcRvss4";
+
 let storedNumbers = [];
 
 // Middleware
@@ -20,7 +25,11 @@ app.get('/numbers/:numberid', async (req, res) => {
   }
 
   try {
-    const response = await axios.get(`http://testserver/numbers/${numberid}`);
+    const response = await axios.get(`http://testserver/numbers/${numberid}`, {
+      headers: {
+        'Authorization': `Bearer ${ACCESS_TOKEN}`
+      }
+    });
     const receivedNumbers = response.data;
 
     const prevWindow = [...storedNumbers];
